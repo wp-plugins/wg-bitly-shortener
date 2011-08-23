@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: webbgaraget,gish
 Donate link: http://webbgaraget.se/
-Tags: share, short url, statistics
+Tags: share, short url, statistics, bit.ly, bitly, url, 
 Requires at least: 3.2.1
 Tested up to: 3.2.1
 Stable tag: 0.1
