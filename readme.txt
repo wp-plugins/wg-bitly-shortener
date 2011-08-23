@@ -4,7 +4,7 @@ Donate link: http://webbgaraget.se/
 Tags: share, short url, statistics
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 0.1
 
 Uses bit.ly's shorten service to automatically create a shortened URL when publishing a post.
 
