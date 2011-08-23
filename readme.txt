@@ -14,6 +14,10 @@ This plugin makes it easier to share blog post since all posts automatically get
 
 Click statistics is shown for each post and also as a dashboard widget (can be toggled).
 
+= Todo =
+* Ability to use own domain
+* Generate shortlinks for all existing posts
+
 == Installation ==
 
 1. Download the plugin and extract it into `/wp-content/plugins/`.
