@@ -1,6 +1,7 @@
 <?php
 
 require_once( dirname( __FILE__ ) . '/lib/BitLy.php' );
+require_once( dirname( __FILE__ ) . '/lib/WGBitLyHelper.php' );
 
 class WGBitLyPost
 {
@@ -39,8 +40,8 @@ class WGBitLyPost
 		
 		$login = get_option( 'wg-bitly-login');
 		$apikey = get_option( 'wg-bitly-apikey' );
-		$domain = get_option( 'wg-bitly-domain' );
-		$valid = BitLy::validate( $login, $apikey );
+		$domain = WGBitlyHelper::get_domain();
+		$valid = BitLy::validate( $login, $apikey, $domain );
 		
 		if ( $valid )
 		{
@@ -57,11 +58,17 @@ class WGBitLyPost
 	function render_meta_box( $post )
 	{
 
-		$valid = BitLy::validate( get_option( 'wg-bitly-login' ), get_option( 'wg-bitly-apikey' ) );		
+		$valid = BitLy::validate( get_option( 'wg-bitly-login' ), get_option( 'wg-bitly-apikey' ) );
 		if (!$valid)
 		{
 			echo "The username and API key don't match.";
 			return;
+		}
+		
+		if ( WGBitLyHelper::using_pro_domain() && !BitLy::validate( get_option( 'wg-bitly-login' ), get_option( 'wg-bitly-apikey' ), WGBitLyHelper::get_domain() ) )
+		{
+		    echo "Pro domain not valid.";
+		    return;
 		}
 		
 		if ( !in_array( $post->post_status, array( 'publish', 'private', 'future' ) ) )

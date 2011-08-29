@@ -1,7 +1,7 @@
 <?php
 require_once( 'WGSettingsView.php' );
 require_once( dirname( __FILE__ ) . '/../lib/BitLy.php' );
-
+require_once( dirname( __FILE__ ) . '/../lib/WGBitLyHelper.php' );
 class WGBitLySettingsView extends WGSettingsView
 {
 	function __construct()
@@ -25,6 +25,8 @@ class WGBitLySettingsView extends WGSettingsView
 		register_setting( 'wg-bitly-options', 'wg-bitly-apikey');
 		// Preferred domain
 		register_setting( 'wg-bitly-options', 'wg-bitly-domain');
+		// Pro domain
+		register_setting( 'wg-bitly-options', 'wg-bitly-pro-domain');
 		// Show in dashboard
 		register_setting( 'wg-bitly-options', 'wg-bitly-dashboard');
 		add_settings_section( 'wg-bitly-section', 'Settings', array( &$this, 'render_options_section' ), 'wg-bitly' );
@@ -54,10 +56,17 @@ class WGBitLySettingsView extends WGSettingsView
 	<?php
 		$login = get_option( 'wg-bitly-login');
 		$apikey = get_option( 'wg-bitly-apikey' );
-		$valid = BitLy::validate( $login, $apikey );
+		$domain = get_option( 'wg-bitly-domain' );
+		$pro_domain = get_option( 'wg-bitly-pro-domain' );
+		$valid_credentials = BitLy::validate( $login, $apikey );
+		$valid_pro_domain = BitLy::validate( $login, $apikey, $pro_domain );
 	?>
-		<?php if ( !$valid ) : ?>
+		<?php if ( !$valid_credentials ) : ?>
 			<div class="error">The username and API key don't match.</div>
+		<?php else: ?>
+		    <?php if ( WGBitLyHelper::using_pro_domain() && !$valid_pro_domain ) : ?>
+			    <div class="error">Chosen domain is not a valid pro domain.</div>
+		    <?php endif; ?>
 		<?php endif; ?>
 	<?php
 	}
@@ -81,14 +90,22 @@ class WGBitLySettingsView extends WGSettingsView
 	function render_input_domain()
 	{
 		$set_domain = get_option( 'wg-bitly-domain' );
+		$pro_domain = get_option( 'wg-bitly-pro-domain' );
 		$domains = array( 'bit.ly', 'j.mp', 'bitly.com' );
 		?>
 		<select id="wg-bitly-domain" name="wg-bitly-domain">
 		<?php foreach ( $domains as $domain): ?>
+		    <?php if ( $set_domain == $domain ): ?>
+		        <?php $selected = ' selected'; ?>
+		    <?php else: ?>
+		        <?php $selected = ''; ?>
+		    <?php endif; ?>
 			<?php $selected = ( $set_domain == $domain ) ? ' selected' : ''; ?>
 			<option value="<?php echo $domain; ?>"<?php echo $selected; ?>><?php echo $domain; ?></option>
 		<?php endforeach; ?>
+		    <option value="-1"<?php echo ( $set_domain == -1 ? ' selected' : '' ); ?>>Pro domain</option>
 		</select>
+        <input type="text" placeholder="Pro domain" id="wg-bitly-pro-domain" name="wg-bitly-pro-domain" value="<?php echo ( $set_domain == -1 ? $pro_domain : ''); ?>" />
 	<?php
 	}
 	

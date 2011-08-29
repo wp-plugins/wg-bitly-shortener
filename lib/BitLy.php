@@ -14,7 +14,7 @@ class BitLy
 	 * @return boolean
 	 * @author Erik Hedberg
 	 */
-	static function validate($username, $apikey)
+	static function validate($username, $apikey, $domain = null)
 	{
 		$params = array(
 			'login' => $username,
@@ -23,7 +23,12 @@ class BitLy
 			'x_apiKey' => $apikey
 		);
 		$valid = self::doApiCall('validate', $params);
-		return ($valid['data']['valid'] == 1);
+		$valid = $valid['data']['valid'];
+		if ($domain)
+		{
+            $valid &= (in_array($domain, array('bit.ly', 'j.mp', 'bitly.com')) || self::is_pro_domain($username, $apikey, $domain));
+		}
+		return $valid;
 	}
 	
 	/**
@@ -38,7 +43,7 @@ class BitLy
 	 */
 	static function shorten($username, $apikey, $url, $domain = 'bit.ly')
 	{
-		if (!self::validate($username, $apikey) || !in_array($domain, array('bit.ly', 'j.mp', 'bitly.com')))
+		if (!self::validate($username, $apikey, $domain))
 		{
 			return false;
 		}
@@ -74,6 +79,28 @@ class BitLy
 		curl_close($ch);
 		return $data;
 	}
+	
+	/**
+	 * Check whether domain is PRO or not.
+	 *
+	 * @param string $username 
+	 * @param string $apikey 
+	 * @param string $domain 
+	 * @return void
+	 * @author Erik Hedberg (erik@webbgaraget.se)
+	 */
+	private static function is_pro_domain($username, $apikey, $domain)
+    {
+        $params = array(
+			'login' => $username,
+			'apiKey' => $apikey,
+			'x_login' => $username,
+			'x_apiKey' => $apikey,
+			'domain' => $domain
+        );
+        $response = self::doApiCall('bitly_pro_domain', $params);
+        return ($response && $response['data']['bitly_pro_domain']);
+    }
 	
 	/**
 	 * Do call to bit.ly API v3 and return response as JSON.
