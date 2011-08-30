@@ -2,7 +2,7 @@
 /*
 Plugin Name: WG bit.ly shortener
 Description: Uses bit.ly's shorten service to automatically create a shortened URL when publishing a post.
-Version: 0.1
+Version: 0.2
 Author: Erik Hedberg (erik@webbgaraget.se)
 Author URI: http://webbgaraget.se/
 License: GPLv2 or later
