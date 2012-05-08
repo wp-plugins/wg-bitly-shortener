@@ -4,7 +4,7 @@ Donate link: http://webbgaraget.se/
 Tags: share, short url, statistics, bitly, url,
 Requires at least: 3.3.2
 Tested up to: 3.3.2
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 Uses bit.ly's shorten service to automatically create a shortened URL when publishing a post.
 
@@ -14,7 +14,7 @@ This plugin makes it easier to share blog post since all posts automatically get
 
 Click statistics is shown for each post and also as a dashboard widget (can be toggled).
 
-Get the shortened URL by using the functions `WGBitlyHelper::the_short_url( $post_id = null )` and `WGBitlyHelper::get_short_url( $post_id = null )`.
+Get the shortened URL by using the functions `WGBitlyHelper::the_short_link( $post_id = null )` and `WGBitlyHelper::the_short_link( $post_id = null )`.
 
 = Todo =
 * Generate shortlinks for all existing posts.
@@ -43,6 +43,12 @@ That might be because of the following reasons:
 2. A published post with box displaying the shortened URL and stats.
 
 == Changelog ==
+
+= 0.3.1 =
+Changed spelling of helper functions that retrieved the shortened URL. Their names are:
+
+* WGBitlyHelper::the_short_link( $post_id = null )
+* WGBitlyHelper::get_short_link( $post_id = null )
 
 = 0.3 =
 Added a feature to get the shortened URL by code. Similar to `the_permalink()` and `get_permalink()`, the functions `WGBitlyHelper::the_short_url( $post_id = null )` and `WGBitlyHelper::get_short_url( $post_id = null )` will output a link and return the URL, respectively.
