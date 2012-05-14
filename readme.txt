@@ -14,7 +14,7 @@ This plugin makes it easier to share blog post since all posts automatically get
 
 Click statistics is shown for each post and also as a dashboard widget (can be toggled).
 
-Get the shortened URL by using the functions `WGBitlyHelper::the_short_link( $post_id = null )` and `WGBitlyHelper::the_short_link( $post_id = null )`.
+Get the shortened URL by using the functions `WGBitlyHelper::the_short_link( $post_id = null )` and `WGBitlyHelper::get_short_link( $post_id = null )`.
 
 = Todo =
 * Generate shortlinks for all existing posts.
