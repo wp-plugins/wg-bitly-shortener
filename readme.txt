@@ -3,8 +3,8 @@ Contributors: webbgaraget,gish
 Donate link: http://webbgaraget.se/
 Tags: share, short url, statistics, bitly, url,
 Requires at least: 3.3.2
-Tested up to: 3.3.2
-Stable tag: 0.3.2
+Tested up to: 3.4.2
+Stable tag: 0.3.3
 
 Uses bit.ly's shorten service to automatically create a shortened URL when publishing a post.
 
@@ -43,6 +43,9 @@ That might be because of the following reasons:
 2. A published post with box displaying the shortened URL and stats.
 
 == Changelog ==
+
+= 0.3.3 =
+Fixed performance issue.
 
 = 0.3.2 =
 Forced new version number
