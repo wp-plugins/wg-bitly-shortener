@@ -4,6 +4,11 @@ class WGBitLyDashboard
 {
 	function __construct()
 	{
+        add_action( 'admin_init', array( $this, 'load_widget' ) );
+	}
+	
+	function load_widget()
+	{
 		$show = get_option( 'wg-bitly-dashboard' );
 		$valid = BitLy::validate( get_option( 'wg-bitly-login' ), get_option( 'wg-bitly-apikey' ) );
 		if ( $show && $valid )
